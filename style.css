@@ -1,6 +1,5 @@
 /*
-	A clone of Particles Web Matrix by Kushagra Agarwal
-    Copyright (C) 2014  Anton Rufino
+	Copyright (C) 2014  Anton Rufino
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
