@@ -50,6 +50,12 @@ function Engine()
 		
 		window.addEventListener('resize', resizeHandler, false);
 	}
+
+	this.save = function()
+	{
+		var dataURL = canvas.toDataURL('image/png');
+		window.open(dataURL);
+	}
 }
 
 function draw()
@@ -138,6 +144,7 @@ function setGUI()
 	gui.add(Draw, 'lineWidth', 1, 20);
 	gui.add(Draw, 'eraser');
 	gui.add(Draw, 'clear');
+	gui.add(Draw, 'save');
 }
 
 window.addEventListener('load', function() 
@@ -147,3 +154,4 @@ window.addEventListener('load', function()
 	
 	setGUI();
 }, false);
+
