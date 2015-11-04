@@ -17,7 +17,7 @@
 
 var canvas, ctx;
 var mx, my;
-var prevMX, prevMY
+var prevMX, prevMY;
 var mousedown = false;
 var Draw;
 
@@ -25,46 +25,46 @@ function Engine()
 {
 	this.color = '#fff';
 	this.background = '#000';
-	
+
 	this.lineWidth = 1;
 	this.lineCap = 'round';
-	
+
 	this.eraser = false;
-	
+
 	this.clear = function()
 	{
 		ctx.fillStyle = this.background;
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-	}
-	
-	this.init = function() 
+	};
+
+	this.init = function()
 	{
 		setUpCanvas();
-		
+
 		ctx.fillStyle = this.background;
 		ctx.fillRect(0, 0, canvas.width, canvas.height);
-		
+
 		canvas.addEventListener('mousemove', mouseMoveHandler, false);
 		canvas.addEventListener('mousedown', mouseDownHandler, false);
 		canvas.addEventListener('mouseup', mouseUpHandler, false);
-		
+
 		window.addEventListener('resize', resizeHandler, false);
-	}
+	};
 
 	this.save = function()
 	{
 		var dataURL = canvas.toDataURL('image/png');
 		window.open(dataURL);
-	}
+	};
 }
 
 function draw()
 {
 	if (mousedown) {
 		ctx.lineJoin = 'round';
-		
+
 		ctx.beginPath();
-		
+
 		if (Draw.eraser) {
 			ctx.strokeStyle = Draw.background;
 			ctx.lineWidth = 10;
@@ -73,13 +73,13 @@ function draw()
 			ctx.strokeStyle = Draw.color;
 			ctx.lineWidth = Draw.lineWidth;
 		}
-		
+
 		ctx.lineCap = Draw.lineCap;
 		ctx.moveTo(prevMX, prevMY);
 		ctx.lineTo(mx, my);
 		ctx.closePath();
 		ctx.stroke();
-		
+
 		prevMX = mx;
 		prevMY = my;
 	}
@@ -88,25 +88,25 @@ function draw()
 function mouseMoveHandler(e)
 {
 	e.preventDefault();
-	
+
 	mx = e.clientX;
 	my = e.clientY;
-	
+
 	draw();
 }
-	
+
 function mouseDownHandler(e)
 {
 	e.preventDefault();
-	
+
 	prevMX = mx - 1;
 	prevMY = my;
-	
+
 	mousedown = true;
-	
-	draw()
+
+	draw();
 }
-	
+
 function mouseUpHandler(e)
 {
 	e.preventDefault();
@@ -117,11 +117,11 @@ function resizeHandler()
 {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-	
+
 	Draw.clear();
 }
-	
-function setUpCanvas() 
+
+function setUpCanvas()
 {
 	canvas = document.getElementById('feild');
 	canvas.width = window.innerWidth;
@@ -135,11 +135,11 @@ function setUpCanvas()
 function setGUI()
 {
 	var gui = new dat.GUI();
-	
+
 	gui.addColor(Draw, 'color');
 	gui.addColor(Draw, 'background').onChange(function(value)
 	{
-		Draw.clear()
+		Draw.clear();
 	});
 	gui.add(Draw, 'lineWidth', 1, 20);
 	gui.add(Draw, 'eraser');
@@ -147,11 +147,10 @@ function setGUI()
 	gui.add(Draw, 'save');
 }
 
-window.addEventListener('load', function() 
+window.addEventListener('load', function()
 {
 	Draw = new Engine();
 	Draw.init();
-	
+
 	setGUI();
 }, false);
-
